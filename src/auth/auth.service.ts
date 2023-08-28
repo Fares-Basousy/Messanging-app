@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { AuthDto } from './dto/Auth.dto';
 import * as argon from 'argon2'
 import { User } from 'src/Scheema/UserScheema';
-import { Model } from 'mongoose';
+import { Model,  } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
@@ -17,4 +17,21 @@ export class AuthService {
     return createdUser
 
 }
+async signin(dto:AuthDto):Promise<User> {
+
+  const user = await this.userModel.findOne({ email: dto.email });
+
+  if(!user){
+    throw new ForbiddenException('Credentionals incorrect')
+  }
+    const ps = await argon.verify(await user.password,dto.password)
+  
+  if(!ps){
+    throw new ForbiddenException('Incorrect password')
+  }
+  delete user.password
+  return  user
+}
+
+
 }
