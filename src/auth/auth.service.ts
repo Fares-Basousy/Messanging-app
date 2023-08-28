@@ -14,7 +14,6 @@ export class AuthService {
     const hash = await  argon.hash(dto.password);
     const createdUser = new this.userModel({name:dto.name, password:hash, email: dto.email});
     createdUser.save();
-    delete createdUser['password']
     return createdUser
 
 }
