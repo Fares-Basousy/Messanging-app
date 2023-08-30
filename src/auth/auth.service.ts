@@ -4,10 +4,12 @@ import * as argon from 'argon2'
 import { User } from 'src/Scheema/UserScheema';
 import { Model,  } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
+import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
-  constructor(@InjectModel(User.name) private  userModel: Model<User>) {}
+  constructor(@InjectModel(User.name) private  userModel: Model<User> , private jwt: JwtService,private config : ConfigService) {}
 
   async signup(dto:AuthDto):Promise<User> {
 
@@ -17,7 +19,7 @@ export class AuthService {
     return createdUser
 
 }
-async signin(dto:AuthDto):Promise<User> {
+async signin(dto:AuthDto):Promise<{access_token: string}> {
 
   const user = await this.userModel.findOne({ email: dto.email });
 
@@ -29,9 +31,19 @@ async signin(dto:AuthDto):Promise<User> {
   if(!ps){
     throw new ForbiddenException('Incorrect password')
   }
-  delete user.password
-  return  user
+  return  this.signinToken(user.id,user.email)
 }
 
+secret  = this.config.get('jwtPass')
+
+async signinToken (userId:number,email:string){
+  const payloud ={sub:  userId,email}
+  
+  const token = await  this.jwt.signAsync(payloud,{
+    expiresIn: '15min',
+    secret: this.secret
+  })
+  return {access_token : token}
+}
 
 }
