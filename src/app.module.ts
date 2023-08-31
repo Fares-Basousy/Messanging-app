@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { UserController } from './user/user.controller';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [AuthModule,ConfigModule.forRoot({isGlobal: true,}),
@@ -14,8 +16,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         useNewUrlParser: true,
         useUnifiedTopology: true,
       }),
-    }),],
-  controllers: [AppController],
+    }),
+    UserModule,],
+  controllers: [AppController, UserController],
   providers: [AppService],
 })
 export class AppModule {}
