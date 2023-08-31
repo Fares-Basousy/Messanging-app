@@ -1,8 +1,8 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { AuthDto } from './dto/Auth.dto';
 import * as argon from 'argon2'
-import { User } from 'src/Scheema/UserScheema';
-import { Model,  } from 'mongoose';
+import { User } from 'src/Schema/UserSchema';
+import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';

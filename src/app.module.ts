@@ -6,6 +6,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserController } from './user/user.controller';
 import { UserModule } from './user/user.module';
+import { MessagesModule } from './messages/messages.module';
 
 @Module({
   imports: [AuthModule,ConfigModule.forRoot({isGlobal: true,}),
@@ -17,7 +18,8 @@ import { UserModule } from './user/user.module';
         useUnifiedTopology: true,
       }),
     }),
-    UserModule,],
+    UserModule,
+    MessagesModule,],
   controllers: [AppController, UserController],
   providers: [AppService],
 })

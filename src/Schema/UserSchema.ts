@@ -1,7 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import * as mongoose from 'mongoose';
+import { Room } from './Room.schema';
 
-export type UserDocument = HydratedDocument<User>;
+export type UserDocument = mongoose.HydratedDocument<User>;
 
 @Schema({
   toJSON: {
@@ -20,6 +21,9 @@ export class User  {
   
   @Prop({require : true})
   password: string
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Room' })
+  rooms: Room[];
 
 
 }
