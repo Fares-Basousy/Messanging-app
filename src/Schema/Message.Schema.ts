@@ -19,9 +19,6 @@ export class Message  {
   @Prop({require : true, unique : true})
   sender: string;  
   
-  @Prop({require : true})
-  reciever: string
-
   @Prop({type:Date, default: Date.now})
   createdAt: Date
 
