@@ -13,7 +13,7 @@ export type RoomDocument = mongoose.HydratedDocument<Room>;
   },
 })
 export class Room  {
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Message' })
+  @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: 'Message' })
   messages: Message[] = [];
 
    
