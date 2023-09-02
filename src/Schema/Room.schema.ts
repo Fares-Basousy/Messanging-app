@@ -18,8 +18,8 @@ export class Room  {
 
    
   
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User'})
-  users: User[] =[];
+  @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: 'User',required:true})
+  users: User[];
 
 
 }

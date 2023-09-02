@@ -3,18 +3,16 @@ import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { RoomDto } from './dto/room.dto';
 import { UserService } from './user.service';
+
 @Controller('user')
 export class UserController {
     constructor (private userService: UserService){}
-
-
 
     @UseGuards(AuthGuard('jwt'))
     @Get('me')
     getRooms(@Req() req : Request){
        return this.userService.getRooms(req.user)
  
-        
     }
     @UseGuards(AuthGuard('jwt'))
     @Get(':id')
@@ -22,9 +20,9 @@ export class UserController {
        return {chat:this.userService.getChat(chat), req:req}}
 
     @UseGuards(AuthGuard('jwt'))
-    @Post('createChat')
+    @Post('createchat')
     createChat(@Body() dto:RoomDto){
+        console.log(dto)
         return this.userService.CreateRoom(dto)
     }
-
 }

@@ -5,6 +5,8 @@ import { RoomSchema, Room } from 'src/Schema/Room.schema';
 import { MessageSchema, Message} from 'src/Schema/Message.Schema'
 import { MongooseModule } from '@nestjs/mongoose';
 import { JwtModule } from '@nestjs/jwt';
+import { UserController } from './user.controller';
+import { JwtStrategy } from 'src/auth/strategy';
 
  @Module({
   imports:[MongooseModule.forFeature([
@@ -12,6 +14,7 @@ import { JwtModule } from '@nestjs/jwt';
     {name: Message.name, schema: MessageSchema }, 
     {name:Room.name, schema: RoomSchema }]),
     JwtModule.register({}),],
-  providers: [UserService]
+    controllers:[UserController],
+  providers: [UserService,JwtStrategy]
 })
 export class UserModule {}

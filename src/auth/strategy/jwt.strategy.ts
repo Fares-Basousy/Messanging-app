@@ -11,6 +11,7 @@ export class JwtStrategy extends PassportStrategy(Strategy,'jwt') {
   constructor(config:ConfigService, @InjectModel(User.name) private  userModel: Model<User>) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      igonoreExpiration:false,
       secretOrKey: config.get('jwtPass'),
     });
   }

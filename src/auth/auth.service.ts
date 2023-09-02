@@ -22,6 +22,7 @@ export class AuthService {
 async signin(dto:AuthDto):Promise<{access_token: string}> {
 
   const user = await this.userModel.findOne({ email: dto.email });
+  console.log(user)
 
   if(!user){
     throw new ForbiddenException('Credentionals incorrect')
