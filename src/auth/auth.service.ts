@@ -14,15 +14,14 @@ export class AuthService {
   async signup(dto:AuthDto):Promise<User> {
 
     const hash = await  argon.hash(dto.password);
-    const createdUser = new this.userModel({name:dto.name, password:hash, email: dto.email});
+    const createdUser = new this.userModel({name:dto.name.toLocaleLowerCase(), password:hash, email: dto.email.toLocaleLowerCase()});
     createdUser.save();
     return createdUser
 
 }
 async signin(dto:AuthDto):Promise<{access_token: string}> {
 
-  const user = await this.userModel.findOne({ email: dto.email });
-  console.log(user)
+  const user = await this.userModel.findOne({ email: dto.email.toLocaleLowerCase() });
 
   if(!user){
     throw new ForbiddenException('Credentionals incorrect')
@@ -32,7 +31,7 @@ async signin(dto:AuthDto):Promise<{access_token: string}> {
   if(!ps){
     throw new ForbiddenException('Incorrect password')
   }
-  return  this.signinToken(user.id,user.email)
+  return  this.signinToken(user.id.toLocaleLowerCase(),user.email.toLocaleLowerCase())
 }
 
 secret  = this.config.get('jwtPass')

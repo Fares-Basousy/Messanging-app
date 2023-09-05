@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { MessagesService } from './messages.service';
 import { MessagesGateway } from './messages.gateway';
 import { UserSchema, User } from 'src/Schema/UserSchema';
 import { RoomSchema, Room } from 'src/Schema/Room.schema';
@@ -11,6 +10,6 @@ import { MongooseModule } from '@nestjs/mongoose';
     {name: User.name, schema: UserSchema },
     {name: Message.name, schema: MessageSchema }, 
     {name:Room.name, schema: RoomSchema }])],
-  providers: [MessagesGateway, MessagesService],
+  providers: [MessagesGateway],
 })
 export class MessagesModule {}

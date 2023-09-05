@@ -8,21 +8,20 @@ import { UserService } from './user.service';
 export class UserController {
     constructor (private userService: UserService){}
 
-    @UseGuards(AuthGuard('jwt'))
+    //@UseGuards(AuthGuard('jwt'))
     @Get('me')
     getRooms(@Req() req : Request){
-       return this.userService.getRooms(req.user)
- 
+      return this.userService.getRooms(req)
+        //needs further notice
     }
-    @UseGuards(AuthGuard('jwt'))
-    @Get(':id')
+   // @UseGuards(AuthGuard('jwt'))
+  /*  @Get(':id')
     getChat(@Param('id') chat :string,@Req() req:Request){
        return {chat:this.userService.getChat(chat), req:req}}
-
-    @UseGuards(AuthGuard('jwt'))
+*/
+    //@UseGuards(AuthGuard('jwt'))
     @Post('createchat')
     createChat(@Body() dto:RoomDto){
-        console.log(dto)
         return this.userService.CreateRoom(dto)
     }
 }

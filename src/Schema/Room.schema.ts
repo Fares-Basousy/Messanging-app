@@ -18,7 +18,7 @@ export class Room  {
 
    
   
-  @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: 'User',required:true})
+  @Prop({ type: [mongoose.Types.ObjectId], ref: 'User',required:true})
   users: User[];
 
 
