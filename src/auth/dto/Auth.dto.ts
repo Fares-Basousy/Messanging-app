@@ -1,4 +1,4 @@
-import { IsEmail,Length, IsNotEmpty} from "class-validator" 
+import { IsEmail,Length, IsNotEmpty,Min} from "class-validator" 
 
 export class AuthDto {
     
@@ -13,6 +13,6 @@ export class AuthDto {
     
     
     @IsNotEmpty()
-    @Length(7,20)
+    @Length(7,50)
     password : string
 }

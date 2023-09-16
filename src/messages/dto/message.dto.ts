@@ -10,4 +10,6 @@ export class MessageDto {
 
     @IsNotEmpty()
     room :string
+
+    date: Date = new Date()
 }
