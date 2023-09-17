@@ -33,9 +33,9 @@ export declare class AuthService {
     private jwt;
     private config;
     constructor(userModel: Model<User>, jwt: JwtService, config: ConfigService);
-    signup(dto: AuthDto): Promise<(import("mongoose").Document<unknown, {}, User> & User & {
+    signup(dto: AuthDto): Promise<import("mongoose").Document<unknown, {}, User> & User & {
         _id: import("mongoose").Types.ObjectId;
-    }) | "Name Already Taken." | "Email Already Taken.">;
+    }>;
     signin(dto: SigninAuthDto): Promise<{
         access_token: string;
     }>;

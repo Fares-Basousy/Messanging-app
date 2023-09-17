@@ -6,7 +6,7 @@ export declare class UserService {
     private roomModel;
     private userModel;
     constructor(roomModel: Model<Room>, userModel: Model<User>);
-    CreateRoom(request: RoomDto): Promise<(mongoose.Document<unknown, {}, Room> & Room & {
+    CreateRoom(request: RoomDto): Promise<mongoose.Document<unknown, {}, Room> & Room & {
         _id: mongoose.Types.ObjectId;
-    }) | "User not found." | "Room already exists.">;
+    }>;
 }

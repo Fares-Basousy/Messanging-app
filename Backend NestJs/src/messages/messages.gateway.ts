@@ -29,20 +29,16 @@ export class MessagesGateway {
     else {
        id = client.handshake.query.id
     }
-    console.log(id)
     const objectId =  new mongoose.Types.ObjectId(id)
-    console.log(id)
     const rooms = await this.roomModel.find({ users: { $in: objectId } })
     rooms.forEach((room) => {
       client.join(room._id.toHexString());
     });
-    console.log(rooms)
     client.emit('initialize', {rooms});
   }
   
   @SubscribeMessage('sendmsg')
   async newMsg(@MessageBody() messageDto: MessageDto) {
-    console.log(messageDto)
     const roomid = new mongoose.Types.ObjectId(messageDto.room)
     const room = await this.roomModel.findOneAndUpdate({_id:roomid}, { $push: { messages: messageDto  }},  {returnNewDocument : true})
     this.server.to(room._id.toHexString()).emit('sendmsg', (messageDto)); 

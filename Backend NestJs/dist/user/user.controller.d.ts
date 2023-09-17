@@ -28,7 +28,7 @@ import { UserService } from './user.service';
 export declare class UserController {
     private userService;
     constructor(userService: UserService);
-    createChat(dto: RoomDto): Promise<"User not found." | "Room already exists." | (import("mongoose").Document<unknown, {}, import("../Schema/Room.schema").Room> & import("../Schema/Room.schema").Room & {
+    createChat(dto: RoomDto): Promise<import("mongoose").Document<unknown, {}, import("../Schema/Room.schema").Room> & import("../Schema/Room.schema").Room & {
         _id: import("mongoose").Types.ObjectId;
-    })>;
+    }>;
 }

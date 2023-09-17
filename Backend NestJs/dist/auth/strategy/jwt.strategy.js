@@ -30,8 +30,8 @@ let JwtStrategy = class JwtStrategy extends (0, passport_1.PassportStrategy)(pas
         this.userModel = userModel;
     }
     async validate(payload) {
-        console.log(payload);
-        const user = await this.userModel.findOne({ email: payload.email });
+        const objectId = new mongoose_2.default.Types.ObjectId(payload.sub);
+        const user = await this.userModel.findOne({ _id: objectId });
         delete user.password;
         return user;
     }

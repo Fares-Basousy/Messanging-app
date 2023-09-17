@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { io } from "socket.io-client";
@@ -15,11 +15,12 @@ export default function Dashboard() {
   const [newRoom,SetNewRoom] = useState('')
   const [responseMessage,setResponseMessage] = useState('')
   const router = useRouter()
-  const  name = useRef(Cookies.get('name'))
+  const  name = useRef()
   const  id = useRef(Cookies.get('userId'))
   const  socket = useRef(null);
   useEffect(() => {
     
+    name.current = Cookies.get('name')
     // Create a socket connection
     socket.current = io('http://localhost:5000',{query: {'id':id.current }},)
 
@@ -29,15 +30,12 @@ export default function Dashboard() {
     socket.current.on('initialize', (data) => {
       
       setRooms(data.rooms)
-      console.log(data.rooms)
   
     })
 
     // Listen for incoming messages
     socket.current.on('sendmsg', (message) => {
         setMessages((prevMessages) => [...prevMessages, message]);
-        console.log(message)
-        console.log(messages)
     });
 
     return () => {
@@ -57,7 +55,7 @@ const openChat = (roomId)=>{
   
   const room = rooms.find((array) => array._id == roomId)
   setCurrentRoom(room) 
-   setMessages(room.messages)
+  setMessages(room.messages)
 }
 
 const  addRoom = async  () =>{
@@ -66,46 +64,35 @@ const  addRoom = async  () =>{
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "authorization" : "Bearer" + Cookies.get('access_token')
+      
     },
     body: JSON.stringify(data),
   }).then(async (res) => {
     const response  = await res.json() //to read readable stream
     
-    if (res.status == 200 || res.status == 201)
+    if (response.status == 200 || response.status == 201)
     {
-      window.location.reload();
+    window.location.reload();
     }
     else {
-      
-      setMessage(response.message);}
-  })
+    setResponseMessage(response.message);           
+    setMessage(response.message);}
+    })
   .catch((error) => {
-    console.log(error);
-    setResponseMessage(error);
+    console.log(error)
   });
 }
-
-
-
-
-
   return (<>
 <div className="flex flex-row h-full w-full overflow-x-hidden justify-around  overscroll-auto">
   <div className= "py-10 h-screen bg-gray-3 px-2 w-72">
     <div className= "max-w-md h-full mx-auto bg-gray-100 shadow-lg rounded-lg overflow-hidden md:max-w-lg container flex flex-col ">
       <div className="bg-gray-700 rounded-l flex items-center ">
-          <Image  src="./../icon.svg" sizes="any" width= {100} height= {100} className=""/>
+          <Image  src="./../icon.svg" sizes="any" width= {100} height= {100}/>
           <div className="text-2xl font-extrabold">{name.current}</div>
       </div>
         <div className= "md:flex">
             <div className= "w-full p-4 overflow-hidden container">
                 <ul>
-                    <li className= "flex justify-between border rounded-xl  items-center bg-white mt-2 p-2 hover:shadow-lg rounded cursor-pointer transition">
-                        <div className= "flex ml-2">
-                            <div className="flex flex-col ml-2"> <span className= "font-medium text-black">Jessica Koel</span> <span className= "text-sm text-gray-400 truncate w-32">Hey, Joel, I here to help you out please tell me</span> </div>
-                        </div>
-                    </li>
                   {  rooms.map(room => (
                     <li className= "flex justify-between border rounded-xl  items-center bg-white mt-2 p-2 hover:shadow-lg rounded cursor-pointer transition" onClick={()=>openChat(room._id)} key={room._id}>
                         <div className= "flex ml-2">
@@ -141,7 +128,7 @@ const  addRoom = async  () =>{
           <div className="flex-none min-w-full px-4 sm:px-6 md:px-0 overflow-hidden lg:overflow-auto scrollbar:!w-1.5 scrollbar:!h-1.5 scrollbar:bg-transparent scrollbar-track:!bg-slate-100 scrollbar-thumb:!rounded scrollbar-thumb-y-0 scrollbar-track:!rounded dark:scrollbar-track:!bg-slate-500/[0.16] dark:scrollbar-thumb:!bg-slate-500/50 max-h-96 lg:supports-scrollbars:pr-2 lg:max-h-96"  style={{ minHeight : '85vh'}}>
             <div className="grid gap-y-2">
             {messages.map((message) => (
-                <div  className={"relative ml-3 text-sm bg-white py-2 px-4 shadow rounded-xl max-w-xs md:max-w-lg lg:max-w-xl xl:max-w-2xl " + (message.sender==name.current?'bg-gray-900 text-white col-start-6 col-end-13 ':'bg-white text-gray-800 col-start-1 col-end-8')}>
+                <div  className={"relative ml-3 text-sm  py-2 px-4 shadow rounded-xl max-w-xs md:max-w-lg lg:max-w-xl xl:max-w-2xl " + (message.sender==name.current?' bg-gray-900 text-white col-start-6 col-end-13 ':'bg-white text-gray-800 col-start-1 col-end-8')}>
                   <p className="text-base md:text-lg lg:text-xl xl:text-2xl whitespace-normal break-all ">{message.text}</p>
                 </div>
             ))}
@@ -156,13 +143,12 @@ const  addRoom = async  () =>{
                 <input type="text" className="flex w-full border rounded-xl focus:outline-none focus:border-indigo-300 text-gray-800 pl-4 h-10" placeholder="Message" value={currentMessage} onChange={(e) => setCurrentMessage(e.target.value)}/>
               </div>
             </div>
-            <div className="ml-4">
-              <button className="flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 rounded-xl text-white px-4 py-1 flex-shrink-0" onClick={sendMessage}>
+            
+              <button className=" ml-4 flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 rounded-xl text-white px-4 py-1 flex-shrink-0" onClick={sendMessage}>
                 <span>Send</span>
                 
               </button>
-            </div>
-          
+                      
           </div>  
 
 
@@ -228,7 +214,7 @@ const  addRoom = async  () =>{
                   <button
                     className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={async () => {setShowModal(false)
+                    onClick={async () => {
                       const res = await addRoom(newRoom)
                     }}
                   >
@@ -245,7 +231,6 @@ const  addRoom = async  () =>{
 </>
   );
 }
-// look at the grid grid line
 
 
 

@@ -29,9 +29,9 @@ import { SigninAuthDto } from './dto/Auth.signin.dto';
 export declare class AuthController {
     private authService;
     constructor(authService: AuthService);
-    signup(dto: AuthDto): Promise<(import("mongoose").Document<unknown, {}, import("../Schema/UserSchema").User> & import("../Schema/UserSchema").User & {
+    signup(dto: AuthDto): Promise<import("mongoose").Document<unknown, {}, import("../Schema/UserSchema").User> & import("../Schema/UserSchema").User & {
         _id: import("mongoose").Types.ObjectId;
-    }) | "Name Already Taken." | "Email Already Taken.">;
+    }>;
     signin(dto: SigninAuthDto): Promise<{
         access_token: string;
     }>;

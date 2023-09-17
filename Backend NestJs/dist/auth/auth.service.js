@@ -30,10 +30,10 @@ let AuthService = class AuthService {
     async signup(dto) {
         const hash = await argon.hash(dto.password);
         if (await this.userModel.exists({ user: dto.name })) {
-            return "Name Already Taken.";
+            throw new common_1.ForbiddenException("Name Already Taken.");
         }
         else if (await this.userModel.exists({ email: dto.email })) {
-            return "Email Already Taken.";
+            throw new common_1.ForbiddenException("Email Already Taken.");
         }
         const createdUser = new this.userModel({
             name: dto.name.toLocaleLowerCase(),
@@ -48,12 +48,10 @@ let AuthService = class AuthService {
             email: dto.email.toLocaleLowerCase(),
         });
         if (!user) {
-            console.log('hey');
             throw new common_1.ForbiddenException('Credentionals incorrect');
         }
         const ps = await argon.verify(await user.password, dto.password);
         if (!ps) {
-            console.log('hey');
             throw new common_1.ForbiddenException('Incorrect password');
         }
         return this.signinToken(user._id.toHexString(), user.name.toLocaleLowerCase());

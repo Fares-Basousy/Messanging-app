@@ -24,21 +24,22 @@ let UserService = class UserService {
         this.userModel = userModel;
     }
     async CreateRoom(request) {
+        console.log(request);
         const user1Id = await new mongoose_1.default.Types.ObjectId(request.user1);
         const u1 = await this.userModel.findOne({ _id: user1Id });
         const u2 = await this.userModel.findOne({ name: request.user2 });
-        console.log(u1);
         if (u2 == null) {
-            return "User not found.";
+            throw new common_1.ForbiddenException("User not found.");
         }
         else if (await this.roomModel.exists({ users: { $all: [u1._id, u2._id] } })) {
-            return "Room already exists.";
+            throw new common_1.ForbiddenException("Room already exists.");
         }
         else {
             const room = new this.roomModel({ users: [u1._id, u2._id], names: [u1.name, u2.name] });
             room.save();
             await this.userModel.updateOne({ _id: u1._id }, { $push: { rooms: room._id } });
             await this.userModel.updateOne({ _id: u2._id }, { $push: { rooms: room._id } });
+            console.log('room created ');
             return room;
         }
     }

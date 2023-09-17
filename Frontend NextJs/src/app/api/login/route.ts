@@ -7,9 +7,7 @@ export  async function POST(req) {
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify(request)})
     const response = await res.json()
-      if(response.statusCode == 201){
-        const response = await res.json()
-      }
+      
   return  NextResponse.json(response)
 }
 
