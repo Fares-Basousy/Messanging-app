@@ -42,6 +42,7 @@ export class MessagesGateway {
   async newMsg(@MessageBody() messageDto: MessageDto) {
     const roomid = new mongoose.Types.ObjectId(messageDto.room)
     const room = await this.roomModel.findOneAndUpdate({_id:roomid}, { $push: { messages: messageDto  }},  {returnNewDocument : true})
+    //const rooms = await this.roomModel
     this.server.to(room._id.toHexString()).emit('sendmsg', (messageDto)); 
     
   }

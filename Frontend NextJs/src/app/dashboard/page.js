@@ -17,7 +17,7 @@ export default function Dashboard() {
   const router = useRouter()
   const  name = useRef()
   const  id = useRef(Cookies.get('userId'))
-  const  socket = useRef(null);
+  const  socket = useRef();
   useEffect(() => {
     
     name.current = Cookies.get('name')
@@ -29,23 +29,30 @@ export default function Dashboard() {
     });
     socket.current.on('initialize', (data) => {
       console.log(data.rooms)
-      setRooms(data.rooms)
+      if(rooms.length == 0){
+      setRooms(data.rooms)}
   
     })
 
     // Listen for incoming messages
     socket.current.on('sendmsg', (message) => {
-        setMessages((prevMessages) => [...prevMessages, message]);
         console.log(rooms)
-        setRooms((prevRooms) => (
-          prevRooms.map((room) => room.id == message.room ?room.messages.push(message):null))
+        setMessages((prevMessages) => [...prevMessages, message]);
+       setRooms((prevRooms) => (
+          prevRooms.map((room) => {
+            if(room.id == message.room){          
+          room.messages.push(message)}
+          return room}))
         )
+
+
     });
 
     return () => {
         socket.current.disconnect();
     };
-}, []);
+},[rooms]);
+
 const sendMessage = () => {
     socket.current.emit('sendmsg',{
       text: currentMessage,
@@ -53,17 +60,14 @@ const sendMessage = () => {
       room:currentRoom._id});
     // Clear the currentMessage state
     setCurrentMessage('');
-
-    
+    console.log(rooms)      
 };
-const openChat = (roomId)=>{
 
-  
+const openChat = (roomId)=>{
   const room = rooms.find((array) => array._id == roomId)
   setCurrentRoom(room) 
   setMessages(room.messages)
   console.log(rooms)
-
 }
 
 const  addRoom = async  () =>{
@@ -101,11 +105,11 @@ const  addRoom = async  () =>{
         <div className= "md:flex">
             <div className= "w-full p-4 overflow-hidden container">
                 <ul>
-                  {  rooms.map(room => (
+                  {rooms.length==0?null:rooms.map((room) => (
                     <li className= "flex justify-between border rounded-xl  items-center bg-white mt-2 p-2 hover:shadow-lg rounded cursor-pointer transition" onClick={()=>openChat(room._id)} key={room._id}>
                         <div className= "flex ml-2">
                             <div className="flex flex-col ml-2"> <span className= "font-medium text-black">{room.names[0] == name.current?room.names[1]:room.names[0]}
-                              </span> <span className= "text-sm text-gray-400 truncate w-32">{room.messages.length==0?room.messages.slice(-1).text:null}</span> </div>
+                              </span> <span className= "text-sm text-gray-400 truncate w-32">{room.messages.length==0?null:room.messages.slice(-1).text}</span> </div>
                         </div>
                     </li>))} 
                                        
