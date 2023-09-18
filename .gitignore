@@ -40,3 +40,6 @@ Backend NestJs/.env
 # Modules
 Backend NestJs/node_modules
 Frontend NextJs/node_modules
+
+#.next build files
+Frontend NextJs/.next

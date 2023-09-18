@@ -40,6 +40,7 @@ let MessagesGateway = class MessagesGateway {
         rooms.forEach((room) => {
             client.join(room._id.toHexString());
         });
+        console.log(rooms);
         client.emit('initialize', { rooms });
     }
     async newMsg(messageDto) {

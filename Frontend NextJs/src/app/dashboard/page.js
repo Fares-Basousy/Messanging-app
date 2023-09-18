@@ -28,7 +28,7 @@ export default function Dashboard() {
         console.log('Connected');
     });
     socket.current.on('initialize', (data) => {
-      
+      console.log(data.rooms)
       setRooms(data.rooms)
   
     })
@@ -36,6 +36,10 @@ export default function Dashboard() {
     // Listen for incoming messages
     socket.current.on('sendmsg', (message) => {
         setMessages((prevMessages) => [...prevMessages, message]);
+        console.log(rooms)
+        setRooms((prevRooms) => (
+          prevRooms.map((room) => room.id == message.room ?room.messages.push(message):null))
+        )
     });
 
     return () => {
@@ -49,18 +53,22 @@ const sendMessage = () => {
       room:currentRoom._id});
     // Clear the currentMessage state
     setCurrentMessage('');
+
     
 };
 const openChat = (roomId)=>{
+
   
   const room = rooms.find((array) => array._id == roomId)
   setCurrentRoom(room) 
   setMessages(room.messages)
+  console.log(rooms)
+
 }
 
 const  addRoom = async  () =>{
   const data = {user1: id.current,user2:newRoom}
-  res = await fetch("../api/createroom", {
+    await fetch("../api/createroom", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -96,7 +104,7 @@ const  addRoom = async  () =>{
                   {  rooms.map(room => (
                     <li className= "flex justify-between border rounded-xl  items-center bg-white mt-2 p-2 hover:shadow-lg rounded cursor-pointer transition" onClick={()=>openChat(room._id)} key={room._id}>
                         <div className= "flex ml-2">
-                            <div className="flex flex-col ml-2"> <span className= "font-medium text-black">{room.name?room.names[1]:room.names[1]}
+                            <div className="flex flex-col ml-2"> <span className= "font-medium text-black">{room.names[0] == name.current?room.names[1]:room.names[0]}
                               </span> <span className= "text-sm text-gray-400 truncate w-32">{room.messages.length==0?room.messages.slice(-1).text:null}</span> </div>
                         </div>
                     </li>))} 
