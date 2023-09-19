@@ -1,73 +1,139 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Nest.js Server
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This is the server-side codebase for the Messaging App, built using Nest.js.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Table of Contents
 
-## Description
+- [Introduction](#introduction)
+- [Getting Started](#getting-started)
+- [Project Structure](#project-structure)
+- [Environment Variables](#environment-variables)
+- [API Endpoints](#api-endpoints)
+- [Authentication](#authentication)
+- [Database](#database)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Installation
+## Introduction
+
+This Nest.js server is the backbone of our Messaging App, handling user authentication, real-time messaging, and more. Below, you'll find information on setting up and running the server.
+
+## Getting Started
+
+To get the server up and running locally, follow these steps:
+
+1. Clone the repository:
 
 ```bash
-$ npm install
+git clone https://github.com/Fares-Basousy/messaging-app.git
+cd messaging-app/Server_NestJs
 ```
+2. Install dependenies:
+   ```
+     npm install
+   ```
+   
+3. Set up environment variables by creating a .env file in the server directory. You can use the example             env.example file as a reference.
+  
+4. Start the server in development mode:
 
-## Running the app
+     ```
+     npm run start:dev
+     ```
+     
+   the server should be running locally on port 4000
 
-```bash
-# development
-$ npm run start
+## Project Structure
+The project structure follows Nest.js conventions. Here's an overview of important directories and files:
 
-# watch mode
-$ npm run start:dev
+- `src/`: Contains the source code.
+  - `auth/`: Auth Module.
+    - `dto/`: DTOs need for the auth module.
+    - `strategy/` : jwt strategy applied for authentication.
+    - `auth.(controller,module,service)`: Auth Module's controller, module, and service files.
+  - `messages/`: Messages Module's (websockets gateway).
+    - `dto/`: DTO needed for the messages gateway.
+    - `auth.(gateway,module)`: Messages' gateway and module files.
+  - `user/`: User Module.
+    - `dto/`: DTOs need for the User module.
+    - `user.(controller,module,service)`: user Module's controller, module, and service files.
+- `Scheema/`: Database scheemas.
 
-# production mode
-$ npm run start:prod
-```
+## Environment Variables
 
-## Test
+To run the server, you'll need to configure the following environment variables in your `.env` file:
 
-```bash
-# unit tests
-$ npm run test
+- `DB-Uri`: Connection string for your database.
+- `jwtPass`: Secret key for JWT token generation.
 
-# e2e tests
-$ npm run test:e2e
+## API Endpoints
 
-# test coverage
-$ npm run test:cov
-```
+Our server provides the following API endpoints to interact with the Messaging App:
 
-## Support
+### `POST /auth/signup`
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- **Description**: Used to register user.
+- **Request Body**: an auth DTO.
+  - `name` (string): The username of the new user.
+  - `email` (string): The email address of the new user.
+  - `password` (string): The password of the new user.
 
-## Stay in touch
+- **Response**:
+  - `201 OK`: Successfully created user.
+  - `403 Not Found`: if email or username is already taken.
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### `POST /auth/signin/`
 
-## License
+- **Description**: login a user using Auth.signin DTO.
+- **Request body**:
+  - `email` (string): The email of the user.
+  - `password` (string): The email address of the new user.
+- **Response**:
+  - `200 OK`: Successfully fetched the user with a jwt access token that is valid for 24 hours and  has the id     of the user and email.
+  - `403 Not Found`: whether the creds (username) or password is wrong.
 
-Nest is [MIT licensed](LICENSE).
+### `POST /user/createchat`
+
+- **Description**: Create a new room for a with another user to chat .
+- **Request Body**:
+  - `user id` (string): id of the current user which is imported from the cookies.
+  - `the other user` (string): The name of the other user.
+- **Response**:
+  - `201 Created`: User room created successfully.
+  - `400 Bad Request`: other user not found.
+
+## Websocket Messages
+
+### `onconnection`
+- **Description**: on connection sends the user's rooms.
+- **query**:
+  - `id` (string): The id of the user to get his rooms and subscribe him .
+
+### `sendmsg`
+
+- **Description**: gets a message then adds it to the room and returns it to the client for displaying.
+- **Parameters**:
+  - `Message DTO` : Includes sender room and text.
+
+### `openchat`
+- **Description**: gets the room's messages.
+- **query**:
+  - `id` (string): The id of the room.
+
+## Authentication 
+  the strategy takes the user's id and email and makes a jwt access_token and it gets stored in the client side as a cookie
+  where the access token must be valid and sent with the headers for the user to continue
+  
+## Database
+
+There are 2 scheems One for the user and one for the Room
+### User
+- id : object Od 
+- name : string
+- rooms : array of object Ids
+- email: user email
+- password : user's password which is encrypted in the database
+### Room
+- id : Object Id
+- users : array of object Ids
+- names : array of user names
+- messages : array of message objects
