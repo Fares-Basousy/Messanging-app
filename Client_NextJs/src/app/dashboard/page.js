@@ -111,7 +111,7 @@ const  addRoom = async  () =>{
                     <li className= "flex justify-between border rounded-xl  items-center bg-white mt-2 p-2 hover:shadow-lg rounded cursor-pointer transition" onClick={()=>openChat(room._id)} key={room._id}>
                         <div className= "flex ml-2">
                             <div className="flex flex-col ml-2"> <span className= "font-medium text-black">{room.names[0] == name.current?room.names[1]:room.names[0]}
-                              </span> <span className= "text-sm text-gray-400 truncate w-32">{room.messages.length==0?null:room.messages.slice(-1).text}</span> </div>
+                              </span> <span className= "text-sm text-gray-400 truncate w-32">{room.messages.length==0?null:room.messages[room.messages.length-1].text}</span> </div>
                         </div>
                     </li>))} 
                                        
