@@ -22,15 +22,14 @@ A simple messaging app with authentication and authorization built using Next.js
 - Front-end:
   - Next.js
   - React
-  - Redux (or any state management library of your choice)
-  - CSS (or any styling method of your choice)
+  - CSS Tailwind (or any styling method of your choice)
 
 - Back-end:
   - Nest.js
-  - PostgreSQL (or your preferred database)
-  - TypeORM
+  - MongoDb 
+  - Mongoose
   - JWT for authentication
-  - WebSockets for real-time messaging
+  - Socket.io for real-time messaging
 
 ## Getting Started
 
@@ -39,7 +38,7 @@ Follow these instructions to get the project up and running on your local machin
 ### Prerequisites
 
 - Node.js and npm installed on your machine.
-- PostgreSQL database set up and running.
+- MongoDb database set up and running.
 
 ### Installation
 
