@@ -5,7 +5,6 @@ import { RoomDto } from 'src/user/dto/room.dto';
 import { Room } from 'src/Schema/Room.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
-
 import { Model } from 'mongoose';
 import { User } from 'src/Schema/UserSchema';
 @WebSocketGateway( 5000,{
@@ -49,8 +48,9 @@ export class MessagesGateway {
 
   @SubscribeMessage('openchat')
   async openChat(@MessageBody() roomDto:RoomDto) {
+    const id = new mongoose.Types.ObjectId(roomDto._id)
     const room = await this.roomModel.findOne({_id:roomDto._id},)
-    this.server.to(roomDto._id).emit('openchat', (room.messages));
+    this.server.to(roomDto._id).emit('openchat', (room));
   }
 
 }
