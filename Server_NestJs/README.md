@@ -101,7 +101,8 @@ Our server provides the following API endpoints to interact with the Messaging A
   - `201 Created`: User room created successfully.
   - `400 Bad Request`: other user not found.
 
-## Websocket Messages
+## Websocket Messages: 
+   the websockets are on port 5000 because when have the same as the rest of the app          (authentication) they will triggger without a connection
 
 ### `onconnection`
 - **Description**: on connection sends the user's rooms.
@@ -127,13 +128,13 @@ Our server provides the following API endpoints to interact with the Messaging A
 
 There are 2 scheems One for the user and one for the Room
 ### User
-- id : object Od 
-- name : string
-- rooms : array of object Ids
-- email: user email
-- password : user's password which is encrypted in the database
+- **id** : object Od 
+- **name** : string
+- **rooms** : array of object Ids
+- **email**: user email
+- **password** : user's password which is encrypted in the database
 ### Room
-- id : Object Id
-- users : array of object Ids
-- names : array of user names
-- messages : array of message objects
+- **id** : Object Id
+- **users** : array of object Ids
+- **names** : array of user names
+- **messages** : array of message objects
