@@ -9,8 +9,6 @@ A simple messaging app with authentication and authorization built using Next.js
 - [Getting Started](#getting-started)
 - [Project Structure](#project-structure)
 - [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
