@@ -28,7 +28,6 @@ export default function Dashboard() {
         console.log('Connected');
     });
     socket.current.on('initialize', (data) => {
-      console.log(data.rooms)
       if(rooms.length == 0){
       setRooms(data.rooms)}
   
@@ -36,16 +35,19 @@ export default function Dashboard() {
 
     // Listen for incoming messages
     socket.current.on('sendmsg', (message) => {
-        console.log(rooms)
         setMessages((prevMessages) => [...prevMessages, message]);
        setRooms((prevRooms) => (
           prevRooms.map((room) => {
             if(room.id == message.room){          
           room.messages.push(message)}
           return room}))
-        )
+        )})
 
 
+    socket.current.on('openchat', (room) => {
+        setMessages(room.messages);
+        setCurrentRoom(room)
+       
     });
 
     return () => {
@@ -60,14 +62,14 @@ const sendMessage = () => {
       room:currentRoom._id});
     // Clear the currentMessage state
     setCurrentMessage('');
-    console.log(rooms)      
 };
 
 const openChat = (roomId)=>{
-  const room = rooms.find((array) => array._id == roomId)
-  setCurrentRoom(room) 
-  setMessages(room.messages)
-  console.log(rooms)
+  socket.current.emit('openchat',{
+    _id:roomId});
+  // Clear the currentMessage state
+  setCurrentMessage('');
+
 }
 
 const  addRoom = async  () =>{
