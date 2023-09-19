@@ -36,10 +36,10 @@ lerna-debug.log*
 
 # Enviroment files
 .env
-Backend NestJs/.env
+Server_NestJs/.env
 # Modules
-Backend NestJs/node_modules
+Server_NestJs/node_modules
 Frontend NextJs/node_modules
 
 #.next build files
-Frontend NextJs/.next
+Client_NextJs/.next
