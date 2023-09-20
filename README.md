@@ -1,6 +1,6 @@
 # Messaging App
 
-A simple messaging app with authentication and authorization built using Next.js for the front-end and Nest.js for the backend.
+A simple messaging app with authentication and authorization built using Next.js for the Client and Nest.js for the Server.
 
 ## Table of Contents
 
