@@ -9,8 +9,6 @@ This is the client-side codebase for the Messaging App, built using Next.js.
 - [Project Structure](#project-structure)
 - [Features](#features)
 - [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Introduction
 
@@ -68,4 +66,6 @@ Our Messaging App's client-side interface offers a range of features to enhance 
 
   - **Chat Interface:** Engage in real-time conversations within the selected chat room in realtime. Our user-friendly interface ensures smooth communication.
 
+## Usage
 
+Basically the users signs up and login and then adds other users by their usernames and can begin to chat in no time
