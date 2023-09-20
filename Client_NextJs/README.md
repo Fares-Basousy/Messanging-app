@@ -1,34 +1,71 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next.js Client
+
+This is the client-side codebase for the Messaging App, built using Next.js.
+
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Getting Started](#getting-started)
+- [Project Structure](#project-structure)
+- [Features](#features)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Introduction
+
+The Next.js client is the user interface for our Messaging App. It provides a seamless and interactive experience for users. Below, you'll find information on setting up and running the client-side application.
 
 ## Getting Started
 
-First, run the development server:
+To get the client-side application up and running locally, follow these steps:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+1. Clone the repository:
+```
+git clone https://github.com/your-username/messaging-app.git
+cd messaging-app/client
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. install dependencies:
+   ```
+   npm install
+   ```
+   
+3 start the development server:
+```
+npm run dev
+```
+The client-side application should now be running locally on port 3000.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+The project structure follows Next.js conventions. Here's an overview of important directories and files:
 
-## Learn More
+- `src/app`: Contains the pages of the application.
+  - `api`: Contains the API endpoints of the application.
+    - `createroom`: Api  to create a room for the user.
+    - `login`: Api file to login in the user.
+    - `reg`: Api file to register the user.
+  - `auth`: Contains the login pages of the application.
+    - `login`: Contains the login page.
+    - `register`: Contains the register page.
+    - `dashboard`: Contains the dashbord/chat room.
+- `layout`: the layout foulder
 
-To learn more about Next.js, take a look at the following resources:
+## Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Our Messaging App's client-side interface offers a range of features to enhance your messaging experience:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- **User Authentication:** Seamlessly log in to your account and enjoy secure access to the app. (Authentication is handled on the server.)
 
-## Deploy on Vercel
+- **Authorization:** Access the app's features with ease using cookies that store your access token. Feel confident that your interactions are secure.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **User Registration:** New users can quickly sign up, providing a unique username, unique email and a secret password to get started.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- **User Dashboard:** Your personal dashboard is the control center of your messaging experience. It includes:
+
+  - **Chat/Rooms List:** Browse and choose from a list of available chat rooms, making it easy to connect with others.
+
+  - **Chat Interface:** Engage in real-time conversations within the selected chat room in realtime. Our user-friendly interface ensures smooth communication.
+
+
