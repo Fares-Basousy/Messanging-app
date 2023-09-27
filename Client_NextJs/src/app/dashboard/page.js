@@ -53,7 +53,7 @@ export default function Dashboard() {
     return () => {
         socket.current.disconnect();
     };
-},[rooms]);
+},[]);
 
 const sendMessage = () => {
     socket.current.emit('sendmsg',{
