@@ -15,7 +15,7 @@ import { MessagesModule } from './messages/messages.module';
     MongooseModule.forRootAsync({
       inject: [ConfigService],
         useFactory: async (configService: ConfigService) => ({
-        uri: configService.get<string>('DB-Uri'),
+        uri: configService.get<string>('DBUri'),
         useNewUrlParser: true,
         useUnifiedTopology: true,
       }),
