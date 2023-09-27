@@ -27,8 +27,8 @@ jobs:
 
        npm	--prefix ./Server_NestJs install
        npm  --prefix ./Client_NextJs install
-       npm	--prefix ./Server_NestJs build
-       npm	--prefix ./Client_NextJs build
+       npm	--prefix ./Server_NestJs run build
+       npm	--prefix ./Client_NextJs run build
        npm  --prefix ./Client_NextJs run start&
        npm  --prefix ./Server_NestJs run start&
        grunt
