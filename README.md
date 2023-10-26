@@ -1,5 +1,5 @@
 # Messaging App
-Welcome to DMe! It's a delightful blend of WhatsApp Web and Discord, providing authentication for signing up and logging in. Chat with friends in real-time using their usernames, as real-time chat is implemented through Socket.io. You won't have to log in every time, thanks to an access token generated upon login and stored in your browser's cookies. Inspired by Discord's username-based friend adding and the user-friendly interface of WhatsApp Web, this is a straightforward messaging app.
+Welcome to DMe! It's a blend of WhatsApp Web and Discord, providing authentication for signing up and logging in. Chat with friends in real-time using their usernames, as real-time chat is implemented through Socket.io. You won't have to log in every time as an access token generated upon login and stored in your browser's cookies. Inspired by Discord's username-based friend adding and the user-friendly interface of WhatsApp Web, this is a straightforward messaging app.
 
 ## Table of Contents
 
